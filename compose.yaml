@@ -1,0 +1,51 @@
+services:
+  # Web Server (Apache + PHP)
+  php-apache:
+    build: .
+    container_name: xampp-web-server
+    ports:
+      - "8080:80" # PHP, cuz why not --> I love PHP more
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+
+  # Database (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: xampp-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Database Management (phpMyAdmin) --> localhost:8081
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: xampp-phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+
+  # FTP Server (FileZilla Client Compatible) --> localhost:21 (User: admin / Pass: pass123)
+  ftp-server:
+    image: garethflowers/ftp-server
+    container_name: xampp-ftp
+    ports:
+      - "21:21"
+      - "40000-40009:40000-40009"
+    environment:
+      - FTP_USER=admin
+      - FTP_PASS=pass123
+      - PUBLIC_IP=localhost
+    volumes:
+      - ./src:/home/admin
+    restart: always
+
+volumes:
+  db_data:
