@@ -19,7 +19,7 @@
 - Connect to the database via http://localhost:8081 (id:`root`, password:`root_password`)
 - Import that whole sql file as it creates that database
 - And you are good to go as you can now use the website at http://localhost:8080
-**If there is any problems: feel free to contact me by email at `leo.pham@et.esiea.fr`**
+- **If there is any problems: feel free to contact me by email at `leo.pham@et.esiea.fr`**
 
 # Context of this project
 
